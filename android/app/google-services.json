@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "298634076382",
+    "project_id": "nexthour-f7e37",
+    "storage_bucket": "nexthour-f7e37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298634076382:android:ed659a85b9b48b7b84624f",
+        "android_client_info": {
+          "package_name": "com.netrecs.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298634076382-mri9j7hpcv8joeo6d7fue2l82pqnvtle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.netrecs.client",
+            "certificate_hash": "3459412038b92d9ed93da1618826dbbd367e9197"
+          }
+        },
+        {
+          "client_id": "298634076382-s8vr9dkc2011m7qjpg3ei3nttscppflt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLLcxTPca8ZH5ZGtb6mcMyb9dXaWspXU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298634076382-s8vr9dkc2011m7qjpg3ei3nttscppflt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "298634076382-vkmmehs40lp30uun2c0veke5t87b2r46.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.netrecs.client"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-7134424213701089~9230909335"
+    }
+  ],
+  "configuration_version": "1"
+}
