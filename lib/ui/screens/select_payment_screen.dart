@@ -117,12 +117,12 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen>
           .config!
           .paypalPayment;
 //      var productMap;
-      if (Platform.isAndroid) listPaymentGateways.add(
+      listPaymentGateways.add(
 //       productMap = {
 //        'title': 'inapp',
 //        'status': 1,
 //      }
-            PaymentGateInfo(title: 'inapp', status: 1));
+          PaymentGateInfo(title: 'inapp', status: 1));
       if (stripePayment == 1 || "$stripePayment" == "1") {
         listPaymentGateways.add(PaymentGateInfo(title: 'stripe', status: 1)
 //        productMap = {
@@ -934,6 +934,13 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen>
       color: Theme.of(context).backgroundColor,
       child: Center(
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.amber,
+          ),
+          child: Text(
+            "CONTINUE TO PAYMENT",
+            style: TextStyle(color: Colors.black),
+          ),
           onPressed: () {
             if (couponCode == '') {
               if (genCoupon == null) {
@@ -951,7 +958,6 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen>
               });
             }
           },
-          child: Text("CONTINUE"),
         ),
       ),
     );
@@ -982,7 +988,7 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         AspectRatio(
-                          aspectRatio: 2,
+                          aspectRatio: 1.5,
                           // aspectRatio:
                           //     validCoupon == true ? 16.0 / 15.0 : 16.0 / 13.0,
                           child: Column(
@@ -1141,7 +1147,7 @@ class _SelectPaymentScreenState extends State<SelectPaymentScreen>
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
           _sliverList(dailyAmountAp, afterDiscountAmount, planDetails),
-          if (Platform.isAndroid) paymentMethodTabs(),
+          // paymentMethodTabs(),
         ];
       },
       body: _nestedScrollViewBody(),

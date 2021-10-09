@@ -22,18 +22,17 @@ class _InAppState extends State<InApp> {
   StreamSubscription? _purchaseErrorSubscription;
   StreamSubscription? _conectionSubscription;
 
-
   List<String> _productLists = [];
 
   String? _platformVersion = 'Unknown';
   List<IAPItem> _items = [];
   List<PurchasedItem> _purchases = [];
 
-  startMyConnection() async{
+  startMyConnection() async {
     await FlutterInappPurchase.instance.initConnection;
   }
 
-  endMyConnection() async{
+  endMyConnection() async {
     print("---------- End Connection Button Pressed");
     await FlutterInappPurchase.instance.endConnection;
     if (_purchaseUpdatedSubscription != null) {
@@ -51,7 +50,8 @@ class _InAppState extends State<InApp> {
   }
 
   Future _getProduct() async {
-    List<IAPItem> items = await FlutterInappPurchase.instance.getSubscriptions(_productLists);
+    List<IAPItem> items =
+        await FlutterInappPurchase.instance.getSubscriptions(_productLists);
     for (var item in items) {
       print('${item.toString()}');
       this._items.add(item);
@@ -70,15 +70,13 @@ class _InAppState extends State<InApp> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       var planList = Provider.of<AppConfig>(context, listen: false).planList;
 //      For Testing
-      _productLists.add("android.test.canceled");
+      // _productLists.add("android.test.canceled");
 
 //    For Production
-//      _productLists.add("${planList[widget.index].planId}");
+      _productLists.add("${planList[widget.index].planId}");
       this._getProduct();
     });
   }
-
-
 
   @override
   void dispose() {
@@ -114,21 +112,24 @@ class _InAppState extends State<InApp> {
 
     // refresh items for android
     try {
-      String? msg = await (FlutterInappPurchase.instance.consumeAllItems as FutureOr<String?>);
+      String? msg = await (FlutterInappPurchase.instance.consumeAllItems);
       print('consumeAllItems: $msg');
     } catch (err) {
       print('consumeAllItems error: $err');
     }
 
-    _conectionSubscription = FlutterInappPurchase.connectionUpdated.listen((connected) {
+    _conectionSubscription =
+        FlutterInappPurchase.connectionUpdated.listen((connected) {
       print('connected: $connected');
     });
 
-    _purchaseUpdatedSubscription = FlutterInappPurchase.purchaseUpdated.listen((productItem) {
+    _purchaseUpdatedSubscription =
+        FlutterInappPurchase.purchaseUpdated.listen((productItem) {
       print('purchase-updated: $productItem');
     });
 
-    _purchaseErrorSubscription = FlutterInappPurchase.purchaseError.listen((purchaseError) {
+    _purchaseErrorSubscription =
+        FlutterInappPurchase.purchaseError.listen((purchaseError) {
       print('purchase-error: $purchaseError');
     });
   }
@@ -137,11 +138,9 @@ class _InAppState extends State<InApp> {
     FlutterInappPurchase.instance.requestSubscription(item.productId!);
   }
 
-
-
   Future _getPurchases() async {
-    List<PurchasedItem> items =
-    await (FlutterInappPurchase.instance.getAvailablePurchases() as FutureOr<List<PurchasedItem>>);
+    List<PurchasedItem> items = await (FlutterInappPurchase.instance
+        .getAvailablePurchases() as FutureOr<List<PurchasedItem>>);
     for (var item in items) {
       print('${item.toString()}');
       this._purchases.add(item);
@@ -154,7 +153,8 @@ class _InAppState extends State<InApp> {
   }
 
   Future _getPurchaseHistory() async {
-    List<PurchasedItem> items = await (FlutterInappPurchase.instance.getPurchaseHistory() as FutureOr<List<PurchasedItem>>);
+    List<PurchasedItem> items = await (FlutterInappPurchase.instance
+        .getPurchaseHistory() as FutureOr<List<PurchasedItem>>);
     for (var item in items) {
       print('${item.toString()}');
       this._purchases.add(item);
@@ -167,31 +167,39 @@ class _InAppState extends State<InApp> {
   }
 
   List<Widget> _renderInApps() {
-    List<Widget> widgets = this._items
+    List<Widget> widgets = this
+        ._items
         .map((item) => Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.symmetric(horizontal: 15.0),
-            child: Row(
-              children: [
-                Expanded(flex: 1 , child: ButtonTheme(
-                  height: 48,
-                  child: RaisedButton(
-                    onPressed: (){
-                      this._requestPurchase(item);
-                    },
-                    color: primaryBlue,
-                    child: Text('Subscribe', style: TextStyle(color: Colors.white),),
-                  ),
-                )),
-              ],
-            ),)
-          ],
-        ),
-      ),
-    ))
+              margin: EdgeInsets.symmetric(vertical: 10.0),
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: ButtonTheme(
+                                height: 48,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    this._requestPurchase(item);
+                                  },
+                                  color: primaryBlue,
+                                  child: Text(
+                                    'Subscribe',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ))
         .toList();
     return widgets;
   }
@@ -200,29 +208,29 @@ class _InAppState extends State<InApp> {
     List<Widget> widgets = this
         ._purchases
         .map((item) => Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 5.0),
-              child: Text(
-                item.toString(),
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.black,
+              margin: EdgeInsets.symmetric(vertical: 10.0),
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: Text(
+                        item.toString(),
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-            )
-          ],
-        ),
-      ),
-    ))
+            ))
         .toList();
     return widgets;
   }
 
-  Widget makeListTile1(){
+  Widget makeListTile1() {
     var planDetails = Provider.of<AppConfig>(context, listen: false).planList;
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -231,17 +239,23 @@ class _InAppState extends State<InApp> {
         decoration: new BoxDecoration(
             border: new Border(
                 right: new BorderSide(width: 1.0, color: Colors.white24))),
-        child: Icon(FontAwesomeIcons.sortAmountDownAlt, color: Colors.white, size: 20.0,),
+        child: Icon(
+          FontAwesomeIcons.sortAmountDownAlt,
+          color: Colors.white,
+          size: 20.0,
+        ),
       ),
-      title: Padding(padding: EdgeInsets.only(top: 10.0),
+      title: Padding(
+        padding: EdgeInsets.only(top: 10.0),
         child: Text(
           '${planDetails[widget.index].name}',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14.0),
-        ),),
-      subtitle:
-      Container(
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14.0),
+        ),
+      ),
+      subtitle: Container(
         height: 40.0,
-        child:  Column(
+        child: Column(
           children: <Widget>[
             SizedBox(
               height: 8.0,
@@ -250,7 +264,10 @@ class _InAppState extends State<InApp> {
               children: <Widget>[
                 Expanded(
                   flex: 1,
-                  child: Text('Min duration '+ '${planDetails[widget.index].intervalCount}'+' days',
+                  child: Text(
+                      'Min duration ' +
+                          '${planDetails[widget.index].intervalCount}' +
+                          ' days',
                       style: TextStyle(color: Colors.white, fontSize: 12.0)),
                 ),
               ],
@@ -258,37 +275,39 @@ class _InAppState extends State<InApp> {
           ],
         ),
       ),
-      trailing:
-      Column(
-          children:<Widget>[
-            Text("Amount: "+'\n' +
-                '${planDetails[widget.index].amount} ' + '${planDetails[widget.index].currency}'),
-          ]
-      ),
+      trailing: Column(children: <Widget>[
+        Text("Amount: " +
+            '\n' +
+            '${planDetails[widget.index].amount} ' +
+            '${planDetails[widget.index].currency}'),
+      ]),
     );
   }
 
-  Widget razorLogoContainer(){
+  Widget razorLogoContainer() {
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
-          borderRadius: BorderRadius.circular(10.0)
-      ),
-
+          borderRadius: BorderRadius.circular(10.0)),
       child: ListView(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         physics: ClampingScrollPhysics(),
         children: <Widget>[
-          Padding(padding: EdgeInsets.all(50.0),
-            child: Image.asset("assets/gpay.png", scale: 1.0, width: 150.0,),
+          Padding(
+            padding: EdgeInsets.all(50.0),
+            child: Image.asset(
+              "assets/gpay.png",
+              scale: 1.0,
+              width: 150.0,
+            ),
           )
         ],
       ),
     );
   }
 
-  Widget paymentDetailsCard(){
+  Widget paymentDetailsCard() {
     return Card(
       elevation: 0.0,
       shape: RoundedRectangleBorder(
@@ -298,15 +317,12 @@ class _InAppState extends State<InApp> {
       child: Container(
         decoration: BoxDecoration(
             color: Theme.of(context).primaryColorLight,
-            borderRadius: BorderRadius.circular(10.0)
-        ),
+            borderRadius: BorderRadius.circular(10.0)),
         child: ListView(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           physics: ClampingScrollPhysics(),
-          children: <Widget>[
-            makeListTile1()
-          ],
+          children: <Widget>[makeListTile1()],
         ),
       ),
     );
@@ -324,35 +340,35 @@ class _InAppState extends State<InApp> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Container(
-                      height: 20.0,
-                    ),
-                    Card(
-                      elevation: 8.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                      child: razorLogoContainer(),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    paymentDetailsCard(),
-
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
-                ),
+                // Column(
+                //   children: <Widget>[
+                //     Container(
+                //       height: 20.0,
+                //     ),
+                //     Card(
+                //       elevation: 8.0,
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(10.0),
+                //       ),
+                //       margin: new EdgeInsets.symmetric(
+                //           horizontal: 10.0, vertical: 6.0),
+                //       child: razorLogoContainer(),
+                //     ),
+                //     SizedBox(
+                //       height: 30.0,
+                //     ),
+                //     paymentDetailsCard(),
+                //     SizedBox(
+                //       height: 20.0,
+                //     ),
+                //   ],
+                // ),
                 Column(
                   children: this._renderInApps(),
                 ),
-//                Column(
-//                  children: this._renderPurchases(),
-//                ),
+                Column(
+                  children: this._renderPurchases(),
+                ),
               ],
             ),
           ],

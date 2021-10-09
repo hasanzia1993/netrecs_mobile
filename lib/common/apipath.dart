@@ -91,7 +91,7 @@ class APIData {
       'https://play.google.com/store/apps/details?id=' + '$androidAppId';
 
 // For notifications
-  static const String onSignalAppId = "92fb4215-9c75-4883-8cba-4805909c25ab";
+  static const String onSignalAppId = "587249c5-44b9-4e10-b45a-b99ad7f21c95";
 
 // To play google drive video
   static const String googleDriveApi = '';
